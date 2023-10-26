@@ -1,0 +1,12 @@
+ Enable RDP
+
+1. # CMD
+2. reg add “HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp” /v UserAuthentication /t REG_DWORD /d 0 /f
+3. # Powershell
+4. Set-ItemProperty -Path ‘HKLM:\System\CurrentControlSet\Control\Terminal Server’-name “fDenyTSConnections” -Value 0
+5. Enable-NetFirewallRule -DisplayGroup “Remote Desktop”
+6. # Optional
+7. net localgroup “Remote Desktop Users” morph3 /add
+8. # Reruling firewall
+9. netsh advfirewall firewall set rule group=”remote desktop” new enable=Yes
+10. netsh advfirewall firewall add rule name=”allow RemoteDesktop” dir=in protocol=TCP localport=3389 action=allow
